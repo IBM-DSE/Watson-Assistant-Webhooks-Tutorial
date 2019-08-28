@@ -1,0 +1,263 @@
+{
+  "name": "WA_Webhooks_twitter",
+  "intents": [
+    {
+      "intent": "twitter",
+      "examples": [
+        {
+          "text": "news on the event from twitter"
+        },
+        {
+          "text": "what people is saying on twitter"
+        },
+        {
+          "text": "show me what social media is saying about the event"
+        },
+        {
+          "text": "what people is saying about the show"
+        },
+        {
+          "text": "show me some news fomr twitter"
+        },
+        {
+          "text": "any news from twitter"
+        },
+        {
+          "text": "show me the last 3 tweets"
+        },
+        {
+          "text": "@blackmirror"
+        },
+        {
+          "text": "hey give me the last 3 tweets"
+        },
+        {
+          "text": "some tweets"
+        },
+        {
+          "text": "twitter messages"
+        },
+        {
+          "text": "twitts please"
+        },
+        {
+          "text": "twitter @account"
+        },
+        {
+          "text": "what the social media is telling about the event ?"
+        }
+      ],
+      "description": "what tweeter is saying about the event"
+    }
+  ],
+  "entities": [
+    {
+      "entity": "sys-time",
+      "values": []
+    },
+    {
+      "entity": "sys-percentage",
+      "values": []
+    },
+    {
+      "entity": "sys-location",
+      "values": []
+    },
+    {
+      "entity": "account",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "accountNames",
+          "patterns": [
+            "@([A-Za-z0-9_]+)"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": []
+    },
+    {
+      "entity": "sys-person",
+      "values": []
+    },
+    {
+      "entity": "sys-date",
+      "values": []
+    },
+    {
+      "entity": "sys-currency",
+      "values": []
+    }
+  ],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "skill_id": "beb0c088-08b7-47a0-86bc-6fb79fc508d9",
+  "webhooks": [
+    {
+      "url": "https://",
+      "name": "main_webhook",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Account NOT specified",
+      "output": {
+        "text": {
+          "values": [
+            "Can you specify an account name? e.g. \\@blackmirror \\@stranger_things etc."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_9_1566983058682",
+      "conditions": "true",
+      "dialog_node": "node_2_1566984922230",
+      "previous_sibling": "node_3_1566980911557"
+    },
+    {
+      "type": "standard",
+      "title": "Account Specified",
+      "parent": "node_9_1566983058682",
+      "actions": [
+        {
+          "name": "main_webhook",
+          "type": "webhook",
+          "parameters": {
+            "account": "$account"
+          },
+          "result_variable": "webhook_result_1"
+        }
+      ],
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "$account",
+      "dialog_node": "node_3_1566980911557"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_7_1566980961332",
+      "output": {
+        "text": {
+          "values": [
+            "I couldn't find the account - please try again with e.g. \\@blackmirror \\@stranger_things"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_3_1566980911557",
+      "conditions": "anything_else",
+      "dialog_node": "response_7_1566980961332",
+      "previous_sibling": "response_8_1566980960520"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_8_1566980960520",
+      "output": {
+        "text": {
+          "values": [
+            "Last Tweets for $account:<br> - <? $webhook_result_1.response.result.result[0] ?> <br> - <? $webhook_result_1.response.result.result[1] ?><br> - <? $webhook_result_1.response.result.result[2] ?>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "node_3_1566980911557",
+      "conditions": "$webhook_result_1",
+      "dialog_node": "response_8_1566980960520"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {},
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_9_1566983058682"
+    },
+    {
+      "type": "standard",
+      "title": "Twitter - last tweets",
+      "context": {
+        "account": "<? @account.literal ?>"
+      },
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_3_1566980911557"
+      },
+      "conditions": "#twitter",
+      "dialog_node": "node_9_1566983058682",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello. I am your virtual assistant. How can I help you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "context": {
+        "my_cred": {
+          "user": "baafd8f4-f955-4b51-9552-03536a3dc4c4",
+          "password": "931D3fYDzPl9BL0q02mn31VOE8z5PrQA5iXEOaFNl57klMGayAAHnAIuOmdMl5aC"
+        }
+      },
+      "metadata": {},
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "workspace_id": "beb0c088-08b7-47a0-86bc-6fb79fc508d9",
+  "counterexamples": [],
+  "system_settings": {
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
