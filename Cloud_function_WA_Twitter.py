@@ -5,9 +5,10 @@
 # Author: Erika Agostinelli
 
 # INSTRUCTION:
-# Just copy and paste this code in your Cloud Function -> Save 
+# Copy and paste this code in your Cloud Function and make sure to add your 
+# Twitter Dev Account Credential in the code -> Save  
 # Then create a default parameter for 'account' variable by sing the "Parameters" tab on the left
-# main() will be run when you invoke this action
+# menu to test if the function works (use Invoke)
 #
 # @param Cloud Functions actions accept a single parameter, which must be a JSON object.
 #

@@ -1,5 +1,5 @@
 {
-  "name": "WA_Webhooks_twitter",
+  "name": "WA_Webhooks_Twitter",
   "intents": [
     {
       "intent": "twitter",
@@ -47,7 +47,7 @@
           "text": "what the social media is telling about the event ?"
         }
       ],
-      "description": "what tweeter is saying about the event"
+      "description": "what twitter is saying about the event"
     }
   ],
   "entities": [
@@ -105,12 +105,7 @@
     {
       "url": "https://",
       "name": "main_webhook",
-      "headers": [
-        {
-          "name": "Authorization",
-          "value": ""
-        }
-      ]
+      "headers": []
     }
   ],
   "description": "",
@@ -259,5 +254,5 @@
     "spelling_auto_correct": true
   },
   "learning_opt_out": false,
-  "status": "Available"
+  "status": "Training"
 }
