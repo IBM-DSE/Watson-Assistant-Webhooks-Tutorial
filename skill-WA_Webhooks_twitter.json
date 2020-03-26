@@ -239,8 +239,8 @@
       },
       "context": {
         "my_cred": {
-          "user": "baafd8f4-f955-4b51-9552-03536a3dc4c4",
-          "password": "931D3fYDzPl9BL0q02mn31VOE8z5PrQA5iXEOaFNl57klMGayAAHnAIuOmdMl5aC"
+          "user": "",
+          "password": ""
         }
       },
       "metadata": {},
